@@ -2,11 +2,14 @@ package main
 
 import (
 	"github.com/lukexwang/GolangDesignPattern/Bridge"
+	"github.com/lukexwang/GolangDesignPattern/ChainOfResponsibility"
 	"github.com/lukexwang/GolangDesignPattern/Composite2"
 	"github.com/lukexwang/GolangDesignPattern/Factory"
 	"github.com/lukexwang/GolangDesignPattern/Observer"
 	"github.com/lukexwang/GolangDesignPattern/Proxy"
+	"github.com/lukexwang/GolangDesignPattern/State"
 	"github.com/lukexwang/GolangDesignPattern/Strategy"
+	"github.com/lukexwang/GolangDesignPattern/Visitor"
 	"github.com/lukexwang/GolangDesignPattern/simpleFactory"
 )
 
@@ -30,4 +33,8 @@ func main() {
 	//Iterator.IteratorTest()
 	//TemplateMethod.TemplateTest()
 	Strategy.StrategyTest()
+	State.StateTest()
+	//Memento.MementoTest()
+	ChainOfResponsibility.ChainTest()
+	Visitor.VisitorTest()
 }

@@ -13,6 +13,14 @@ func (nvs *NormalVoteState)Vote(user string,voteItem string,voteManager *VoteMan
 	voteManager.MapVote[user]=voteItem
 	fmt.Printf("%s 恭喜你投票成功\n",user)
 }
+//对于投票成功的用户,额外再给予10个积分做奖励
+type NormalVoteState2 struct {
+	*NormalVoteState
+}
+func (nvs2 *NormalVoteState2)Vote(user string,voteItem string,voteManager *VoteManager)  {
+	nvs2.NormalVoteState.Vote(user,voteItem,voteManager)
+	fmt.Printf("%s 请查收10个积分\n",user)
+}
 //重复投票
 type RepeatVoteState struct {}
 func (rvs *RepeatVoteState)Vote(user string,voteItem string,voteManager *VoteManager)  {
@@ -48,7 +56,11 @@ func (vm *VoteManager)Vote(user string,voteItem string)  {
 	vm.MapVoteCount[user]=oldVoteCount
 
 	if oldVoteCount==1 {
-		vm.State=&NormalVoteState{}
+		//vm.State=&NormalVoteState{}
+		//扩展新功能,给投票成功的用户额外10个积分做奖励
+		vm.State=&NormalVoteState2{
+			&NormalVoteState{},
+		}
 	}else if oldVoteCount >1 && oldVoteCount<5 {
 		vm.State=&RepeatVoteState{}
 	}else if oldVoteCount >=5 && oldVoteCount <8 {
@@ -57,4 +69,10 @@ func (vm *VoteManager)Vote(user string,voteItem string)  {
 		vm.State=&BlackVoteState{}
 	}
 	vm.State.Vote(user,voteItem,vm)
+}
+func NewVoteManager() *VoteManager  {
+	return &VoteManager{
+		MapVote:make(map[string]string),
+		MapVoteCount:make(map[string]int),
+	}
 }
